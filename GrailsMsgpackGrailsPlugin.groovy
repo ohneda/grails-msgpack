@@ -7,7 +7,9 @@ class GrailsMsgpackGrailsPlugin {
     def dependsOn = [:]
     // resources that are excluded from plugin packaging
     def pluginExcludes = [
-            "grails-app/views/error.gsp"
+            "grails-app/views/error.gsp",
+            "grails-app/domain/msgpack",
+            "grails-app/services/msgpack"
     ]
 
     // TODO Fill in these fields
