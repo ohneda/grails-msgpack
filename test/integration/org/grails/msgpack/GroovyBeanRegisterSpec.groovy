@@ -3,9 +3,9 @@ package org.grails.msgpack
 import org.msgpack.MessagePack;
 
 import grails.plugin.spock.IntegrationSpec;
-import msgpack.Message
-import msgpack.User
-import msgpack.Comment
+import msgpack.beans.Message
+import msgpack.beans.User
+import msgpack.beans.Comment
 
 class GroovyBeanRegisterSpec extends IntegrationSpec{
 
@@ -16,8 +16,8 @@ class GroovyBeanRegisterSpec extends IntegrationSpec{
 
         when: 'I regist a groovy bean object with GroovyBeanRegister'
         register.register(msgpack.Message)
-        def user = new User(name: "name", title: "title").save()
-        def message = new Message(body: "body",
+        def user = new User(id: 5, version: 10, name: "name", title: "title")
+        def message = new Message(id: 1, version: 0, body: "body",
                 note: "notes",
                 dateCreated: new Date(),
                 dateUpdated: new Date(),
@@ -27,10 +27,8 @@ class GroovyBeanRegisterSpec extends IntegrationSpec{
                 isPublic: true,
                 owner: user,
                 props: ['p1':'v1', 'p2':'v2'],
+                comments: [new Comment(id: 20, version: 0, title: "title:1", body: "body:1"), new Comment(id: 30, version: 4, title: "title:2", body: "body:2")]
                 )
-        message.addToComments(new Comment(title: "title:1", body: "body:1"))
-        message.addToComments(new Comment(title: "title:2", body: "body:2"))
-        message.save()
 
         byte[] packed = MessagePack.pack(message)
 
@@ -42,6 +40,8 @@ class GroovyBeanRegisterSpec extends IntegrationSpec{
 
         then: 'the groovy bean object can be unserialized as before'
         unpack.class == Message
+        unpack.id == message.id
+        unpack.version == message.version
         unpack.body == message.body
         unpack.note == message.note
         unpack.dateCreated == message.dateCreated
@@ -50,10 +50,16 @@ class GroovyBeanRegisterSpec extends IntegrationSpec{
         unpack.price == message.price
         unpack.readCount == message.readCount
         unpack.isPublic == message.isPublic
+        unpack.owner.id == message.owner.id
+        unpack.owner.version == message.owner.version
         unpack.owner.title == message.owner.title
         unpack.owner.name == message.owner.name
+        unpack.comments[0].id == message.comments[0].id
+        unpack.comments[0].version == message.comments[0].version
         unpack.comments[0].title == message.comments[0].title
         unpack.comments[0].body == message.comments[0].body
+        unpack.comments[1].id == message.comments[1].id
+        unpack.comments[1].version == message.comments[1].version
         unpack.comments[1].title == message.comments[1].title
         unpack.comments[1].body == message.comments[1].body
 
@@ -79,9 +85,8 @@ class GroovyBeanRegisterSpec extends IntegrationSpec{
                         isPublic: true,
                         owner: user,
                         props: ['p1':'v1', 'p2':'v2'],
+                        comments: [new Comment(title: "title:1", body: "body:1"), new Comment(title: "title:2", body: "body:2")]
                         )
-                message.addToComments(new Comment(title: "title:1", body: "body:1"))
-                message.addToComments(new Comment(title: "title:2", body: "body:2"))
 
                 byte[] packed = MessagePack.pack(message)
 
