@@ -23,6 +23,10 @@ class Message {
     Boolean isPublic
     Map<String,String> props
     List<Comment> comments
+    @Optional
+    Long id
+    @Optional
+    Long version
 
     static hasMany = [comments: Comment]
     static mapping = { comments lazy: false; owner lazy: false}

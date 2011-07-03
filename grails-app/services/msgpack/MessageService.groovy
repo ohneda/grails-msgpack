@@ -9,7 +9,7 @@ package msgpack
 class MessageService {
 
     static expose = ['msgpack']
-    static exclude=["fullMessageInstance"]
+    static exclude=['fullMessageInstance']
     static transactional = true
 
     Message get(Integer id){
@@ -17,16 +17,7 @@ class MessageService {
     }
 
     Integer create(Message message){
-        // fixme : Message.id and Message.version should be optional allowed to be null in MessagePack
-        message.id = null
-        message.version = null
-        message.owner.id = null
-        message.owner.version = null
         message.owner.save()
-        message.comments.each{ 
-            it.id = null
-            it.version = null
-        }
         message.save()
         message.id
     }
@@ -53,7 +44,7 @@ class MessageService {
         }
 
         target.save()
-        println("updated: ${target.dump()}")
+
         target
 
     }

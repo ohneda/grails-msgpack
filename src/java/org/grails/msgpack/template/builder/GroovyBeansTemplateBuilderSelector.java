@@ -2,6 +2,8 @@ package org.grails.msgpack.template.builder;
 
 import java.lang.reflect.Type;
 
+import org.msgpack.annotation.MessagePackBeans;
+import org.msgpack.template.builder.AnnotationTemplateBuilderSelector;
 import org.msgpack.template.builder.BuilderSelector;
 import org.msgpack.template.builder.TemplateBuilder;
 
@@ -24,12 +26,12 @@ public class GroovyBeansTemplateBuilderSelector implements BuilderSelector {
     public boolean matchType(Type targetType) {
         Class<?> targetClass = (Class<?>)targetType;
 
-        // TODO decide if necessary MessagePackBeans annotation or not
-        // AnnotationTemplateBuilderSelector.isAnnotated(targetClass, MessagePackBeans.class);
+        if(!AnnotationTemplateBuilderSelector.isAnnotated(targetClass, MessagePackBeans.class)){
+            return false;
+        }
 
-        // it doens't check if the targetType has MessagePackBeans annotation for now.
-        boolean result = groovy.lang.GroovyObject.class.isAssignableFrom( targetClass );
-        return result;
+        return groovy.lang.GroovyObject.class.isAssignableFrom( targetClass );
+
     }
 
     @Override
