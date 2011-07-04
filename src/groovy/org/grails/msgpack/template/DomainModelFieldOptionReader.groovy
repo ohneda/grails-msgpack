@@ -5,6 +5,8 @@ import java.lang.reflect.Field;
 import org.msgpack.template.BeansFieldEntry;
 import org.msgpack.template.FieldOption;
 import org.msgpack.template.FieldOptionReader;
+import static org.codehaus.groovy.grails.commons.GrailsClassUtils.*
+import static org.codehaus.groovy.grails.commons.GrailsDomainConfigurationUtil.*
 
 @Singleton
 public class DomainModelFieldOptionReader implements FieldOptionReader {
@@ -17,11 +19,13 @@ public class DomainModelFieldOptionReader implements FieldOptionReader {
                 return FieldOption.OPTIONAL
             }
 
-            if(targetClass.constraints."${entry.name}"?.nullable){
+            def constraints = evaluateConstraints(targetClass)
+            if(constraints?."${entry.name}"?.nullable){
                 return FieldOption.OPTIONAL
             }
 
-            if(targetClass.transients.contains(entry.name)){
+            def transients = getStaticPropertyValue(targetClass, 'transients')
+            if(transients?.contains(entry.name)){
                 return FieldOption.IGNORE
             }
 

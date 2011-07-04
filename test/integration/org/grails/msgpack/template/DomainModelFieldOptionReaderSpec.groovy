@@ -81,25 +81,6 @@ class DomainModelFieldOptionReaderSpec extends IntegrationSpec {
         'isPublic'    | FieldOption.DEFAULT
     }
 
-    def 'a collection field is treated as Optional even if it has no constraints'(){
-
-        given:
-        def field = mock(BeansFieldEntry)
-        field.name.returns(fieldName).stub()
-        FieldOption result
-        play{
-            result = reader.read( msgpack.Message, field, FieldOption.DEFAULT )
-        }
-
-        expect:
-        result == option
-
-        where:
-        fieldName  | option
-        'props'    | FieldOption.OPTIONAL
-        'comments' | FieldOption.OPTIONAL
-    }
-
     def 'id field and version field, which is added by grails, is treated as Optional'(){
 
         given:
