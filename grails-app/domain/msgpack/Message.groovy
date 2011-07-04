@@ -1,17 +1,13 @@
 package msgpack
 
-import org.msgpack.annotation.*;
-
 /**
  * This domain class is not for production use, and doesn't be included in plugin package.
  *
  * @author ohneda
  *
  */
-@MessagePackBeans
 class Message {
 
-    @Optional
     String body
     String note
     Date dateCreated
@@ -23,10 +19,6 @@ class Message {
     Boolean isPublic
     Map<String,String> props
     List<Comment> comments
-    @Optional
-    Long id
-    @Optional
-    Long version
 
     static hasMany = [comments: Comment]
     static mapping = { comments lazy: false; owner lazy: false}
