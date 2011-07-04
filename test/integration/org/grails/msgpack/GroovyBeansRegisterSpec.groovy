@@ -1,18 +1,18 @@
 package org.grails.msgpack
 
-import org.msgpack.MessagePack;
+import org.msgpack.MessagePack
 
 import grails.plugin.spock.IntegrationSpec;
 import msgpack.beans.Message
 import msgpack.beans.User
 import msgpack.beans.Comment
 
-class GroovyBeanRegisterSpec extends IntegrationSpec{
+class GroovyBeansRegisterSpec extends IntegrationSpec{
 
     def 'simple pack and unpack'(){
 
         given:
-        GroovyBeanRegister register = GroovyBeanRegister.instance
+        GroovyBeansRegister register = GroovyBeansRegister.instance
 
         when: 'I regist a groovy bean object with GroovyBeanRegister'
         register.register(msgpack.Message)
@@ -68,7 +68,7 @@ class GroovyBeanRegisterSpec extends IntegrationSpec{
     def 'allow some fields to be null with Optional annotation'(){
 
                 given:
-                GroovyBeanRegister register = GroovyBeanRegister.instance
+                GroovyBeansRegister register = GroovyBeansRegister.instance
 
                 when: 'I regist a groovy bean object with GroovyBeanRegister'
                 register.register(msgpack.Message)
