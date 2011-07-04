@@ -28,8 +28,15 @@ class MessageService {
         def target = Message.get(message.id)
 
         def owner = target.owner
-        def comments = target.comments
         owner.properties = message.owner.properties
+
+        def comments = target.comments
+        List<Comment> tmpComment = []
+        comments.eachWithIndex{ it, index ->
+            it.properties = message.comments.get(index).properties
+            tmpComment << it
+        }
+
         target.properties = message.properties
 
         // update each children element since you can't use the bidirectional relationship for now
@@ -37,11 +44,7 @@ class MessageService {
         target.owner.properties = message.owner.properties
         target.owner.save()
 
-        target.comments = comments
-        target.comments.eachWithIndex{ it, index ->
-            it.properties = message.comments.get(index).properties
-            it.save()
-        }
+        target.comments = tmpComment
 
         target.save()
 
