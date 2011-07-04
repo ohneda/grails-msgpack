@@ -118,4 +118,23 @@ class DomainModelFieldOptionReaderSpec extends IntegrationSpec {
         'id'      | FieldOption.OPTIONAL
         'version' | FieldOption.OPTIONAL
     }
+
+    def 'the field which is marked as transient is treated as Ignore'(){
+
+        given:
+        def field = mock(BeansFieldEntry)
+        field.name.returns(fieldName).stub()
+        FieldOption result
+        play{
+            result = reader.read( msgpack.Message, field, FieldOption.DEFAULT )
+        }
+
+        expect:
+        result == option
+
+        where:
+        fieldName | option
+        'transientProp' | FieldOption.IGNORE
+        'unusedField'   | FieldOption.IGNORE
+    }
 }

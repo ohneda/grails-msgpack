@@ -17,8 +17,12 @@ public class DomainModelFieldOptionReader implements FieldOptionReader {
                 return FieldOption.OPTIONAL
             }
 
-            if(msgpack.Message.constraints."${entry.name}"?.nullable){
+            if(targetClass.constraints."${entry.name}"?.nullable){
                 return FieldOption.OPTIONAL
+            }
+
+            if(targetClass.transients.contains(entry.name)){
+                return FieldOption.IGNORE
             }
 
             return FieldOption.DEFAULT

@@ -19,7 +19,10 @@ class Message {
     Boolean isPublic
     Map<String,String> props
     List<Comment> comments
+    String transientProp
+    Long unusedField
 
+    static transients = ['transientProp', 'unusedField']
     static hasMany = [comments: Comment]
     static mapping = { comments lazy: false; owner lazy: false}
 
