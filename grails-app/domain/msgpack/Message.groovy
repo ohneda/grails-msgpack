@@ -24,7 +24,12 @@ class Message {
 
     static transients = ['transientProp', 'unusedField']
     static hasMany = [comments: Comment]
-    static mapping = { comments lazy: false; owner lazy: false}
+    static mapping = { 
+        comments lazy: false
+        comments cascade: 'all-delete-orphan'
+        owner lazy: false
+        owner cascade: 'all'
+    }
 
     static constraints = {
         body blank: false

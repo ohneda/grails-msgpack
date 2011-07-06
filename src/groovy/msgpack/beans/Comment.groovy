@@ -1,5 +1,6 @@
 package msgpack.beans
 
+import org.msgpack.annotation.Ignore;
 import org.msgpack.annotation.MessagePackBeans;
 import org.msgpack.annotation.Optional;
 
@@ -18,5 +19,7 @@ class Comment {
     Long id
     @Optional
     Long version
+    @Ignore
+    Message message
 
 }

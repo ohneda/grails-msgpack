@@ -118,4 +118,25 @@ class DomainModelFieldOptionReaderSpec extends IntegrationSpec {
         'transientProp' | FieldOption.IGNORE
         'unusedField'   | FieldOption.IGNORE
     }
+
+    def 'the field which belongsTo parent class is treated as Ignore'(){
+
+        // temporary
+        // I'm not sure if this specification is appropriate.
+        // Ideally, Packer could solve circular reference problem.
+        given:
+        def field = mock(BeansFieldEntry)
+        field.name.returns(fieldName).stub()
+        FieldOption result
+        play{
+            result = reader.read( msgpack.User, field, FieldOption.DEFAULT )
+        }
+
+        expect:
+        result == option
+
+        where:
+        fieldName | option
+        'message' | FieldOption.IGNORE
+    }
 }

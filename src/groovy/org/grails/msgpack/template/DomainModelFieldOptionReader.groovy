@@ -29,7 +29,16 @@ public class DomainModelFieldOptionReader implements FieldOptionReader {
                 return FieldOption.IGNORE
             }
 
-            return FieldOption.DEFAULT
+            if(isBelongsTo(targetClass, entry)){
+                return FieldOption.IGNORE
+            }
+
+            return implicitOption
+    }
+
+    def isBelongsTo( Class<?> targetClass, BeansFieldEntry entry ){
+        def belongsTo = getStaticPropertyValue(targetClass, 'belongsTo')
+        belongsTo?.keySet()?.contains(entry.name)
     }
 
 }

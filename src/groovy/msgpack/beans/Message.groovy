@@ -29,5 +29,9 @@ class Message {
     Long id
     @Optional
     Long version
+    @Ignore
+    String transientProp
+    @Ignore
+    Long unusedField
 
 }

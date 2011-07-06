@@ -17,7 +17,6 @@ class MessageService {
     }
 
     Integer create(Message message){
-        message.owner.save()
         message.save()
         message.id
     }
@@ -25,26 +24,23 @@ class MessageService {
     Message update(Message message){
 
         assert message.id
+
         def target = Message.get(message.id)
 
-        def owner = target.owner
-        owner.properties = message.owner.properties
-
-        def comments = target.comments
-        List<Comment> tmpComment = []
-        comments.eachWithIndex{ it, index ->
-            it.properties = message.comments.get(index).properties
-            tmpComment << it
+        def comments = []
+        message.properties.comments.each{
+            if(it.id){
+              def original = target.comments.find{ comment -> comment.id == it.id }
+              original.properties = it.properties
+              comments << original
+            }else{
+              comments << it
+            }
         }
 
         target.properties = message.properties
-
-        // update each children element since you can't use the bidirectional relationship for now
-        target.owner = owner
         target.owner.properties = message.owner.properties
-        target.owner.save()
-
-        target.comments = tmpComment
+        target.comments = comments
 
         target.save()
 
