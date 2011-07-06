@@ -1,5 +1,6 @@
 package msgpack.beans
 
+import org.msgpack.annotation.Ignore;
 import org.msgpack.annotation.MessagePackBeans;
 import org.msgpack.annotation.Optional;
 
@@ -18,5 +19,6 @@ class User {
     Long id
     @Optional
     Long version
-
+    @Ignore
+    message
 }

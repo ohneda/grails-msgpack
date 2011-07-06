@@ -11,12 +11,14 @@ import org.msgpack.annotation.*;
 @MessagePackBeans
 class Message {
 
-    @Optional
     String body
+    @Optional
     String note
     Date dateCreated
+    @Optional
     Date dateUpdated
     User owner
+    @Optional
     Long postalId
     Float price
     Integer readCount
@@ -27,5 +29,9 @@ class Message {
     Long id
     @Optional
     Long version
+    @Ignore
+    String transientProp
+    @Ignore
+    Long unusedField
 
 }

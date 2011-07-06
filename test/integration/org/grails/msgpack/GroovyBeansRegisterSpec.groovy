@@ -1,23 +1,24 @@
 package org.grails.msgpack
 
-import org.msgpack.MessagePack;
+import org.msgpack.MessagePack
 
 import grails.plugin.spock.IntegrationSpec;
-import msgpack.beans.Message
-import msgpack.beans.User
-import msgpack.beans.Comment
+import msgpack.Message
+import msgpack.User
+import msgpack.Comment
 
-class GroovyBeanRegisterSpec extends IntegrationSpec{
+class GroovyBeansRegisterSpec extends IntegrationSpec{
 
     def 'simple pack and unpack'(){
 
         given:
-        GroovyBeanRegister register = GroovyBeanRegister.instance
+        GroovyBeansRegister register = GroovyBeansRegister.instance
 
         when: 'I regist a groovy bean object with GroovyBeanRegister'
-        register.register(msgpack.Message)
-        def user = new User(id: 5, version: 10, name: "name", title: "title")
-        def message = new Message(id: 1, version: 0, body: "body",
+        register.register(Message)
+
+        def user = new User(name: "name", title: "title")
+        def message = new Message(body: "body",
                 note: "notes",
                 dateCreated: new Date(),
                 dateUpdated: new Date(),
@@ -27,19 +28,19 @@ class GroovyBeanRegisterSpec extends IntegrationSpec{
                 isPublic: true,
                 owner: user,
                 props: ['p1':'v1', 'p2':'v2'],
-                comments: [new Comment(id: 20, version: 0, title: "title:1", body: "body:1"), new Comment(id: 30, version: 4, title: "title:2", body: "body:2")]
+                comments: [new Comment(title: "title:1", body: "body:1"), new Comment(title: "title:2", body: "body:2")]
                 )
-
+        message.save()
         byte[] packed = MessagePack.pack(message)
 
         then: 'MessagePack can pack Groovy Beans Object'
         packed != null
 
-        when: 'I unpack the packed bytes'
-        Message unpack = MessagePack.unpack(packed, Message.class)
+        when: 'I unpack the packed bytes to the other beans which has same fields structures.'
+        msgpack.beans.Message unpack = MessagePack.unpack(packed, msgpack.beans.Message.class)
 
-        then: 'the groovy bean object can be unserialized as before'
-        unpack.class == Message
+        then: 'the groovy bean object can be unserialized as it was before'
+        unpack.class == msgpack.beans.Message
         unpack.id == message.id
         unpack.version == message.version
         unpack.body == message.body
@@ -68,7 +69,7 @@ class GroovyBeanRegisterSpec extends IntegrationSpec{
     def 'allow some fields to be null with Optional annotation'(){
 
                 given:
-                GroovyBeanRegister register = GroovyBeanRegister.instance
+                GroovyBeansRegister register = GroovyBeansRegister.instance
 
                 when: 'I regist a groovy bean object with GroovyBeanRegister'
                 register.register(msgpack.Message)
@@ -94,10 +95,10 @@ class GroovyBeanRegisterSpec extends IntegrationSpec{
                 packed != null
 
                 when: 'I unpack the packed bytes'
-                Message unpack = MessagePack.unpack(packed, Message.class)
+                msgpack.beans.Message unpack = MessagePack.unpack(packed, msgpack.beans.Message.class)
 
                 then: 'the groovy bean object can be unserialized as before'
-                unpack.class == Message
+                unpack.class == msgpack.beans.Message
                 unpack.body == message.body
                 unpack.note == message.note
                 unpack.dateCreated == message.dateCreated

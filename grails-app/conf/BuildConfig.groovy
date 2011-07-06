@@ -31,5 +31,6 @@ grails.project.dependency.resolution = {
         // runtime 'mysql:mysql-connector-java:5.1.13'
         compile 'org.msgpack:msgpack:0.5.2-devel'
         compile 'org.msgpack:msgpack-rpc:0.6.1-devel'
+        test 'org.gmock:gmock:0.8.1'
     }
 }
