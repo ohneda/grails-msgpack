@@ -1,5 +1,6 @@
 package org.grails.msgpack
 
+import org.apache.commons.logging.LogFactory;
 import org.grails.msgpack.template.builder.GrailsDomainModelTemplateBuilderSelector;
 import org.grails.msgpack.template.builder.GroovyBeansTemplateBuilderSelector
 import org.msgpack.MessagePack
@@ -13,6 +14,8 @@ import org.msgpack.template.builder.JavassistTemplateBuilder
 
 @Singleton
 class GroovyBeansRegister {
+
+    private static final log = LogFactory.getLog(this)
 
     private GroovyBeansRegister(){
         def registory = BuilderSelectorRegistry.getInstance()
@@ -44,6 +47,7 @@ class GroovyBeansRegister {
     }
 
     public void register(Class<?> clazz){
+        log.info("Register as MessagePack ${clazz}")
         MessagePack.register(clazz)
     }
 }
