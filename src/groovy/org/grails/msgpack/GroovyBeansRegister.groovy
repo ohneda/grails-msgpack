@@ -17,7 +17,7 @@ class GroovyBeansRegister {
     private GroovyBeansRegister(){
         def registory = BuilderSelectorRegistry.getInstance()
 
-        if(!registory.contains("GrailsDomainModelTemplateBuilderSelector")){
+        if(!registory.contains(GrailsDomainModelTemplateBuilderSelector.NAME)){
             registory.insert(0, new GrailsDomainModelTemplateBuilderSelector(
                     new JavassistTemplateBuilder(
                         EntityFieldReaderFactory.getGrailsDomainModelFieldEntryReader(),
