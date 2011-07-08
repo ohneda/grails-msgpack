@@ -1,5 +1,7 @@
 package org.grails.msgpack
 
+import groovy.transform.Synchronized;
+
 import org.apache.commons.logging.LogFactory;
 import org.grails.msgpack.template.builder.GrailsDomainModelTemplateBuilderSelector;
 import org.grails.msgpack.template.builder.GroovyBeansTemplateBuilderSelector
@@ -46,7 +48,14 @@ class GroovyBeansRegister {
         }
     }
 
+    protected registered = []
+    @Synchronized
     public void register(Class<?> clazz){
+        if(registered.contains(clazz.name)){
+            log.debug("${clazz.name} has already been registered.")
+            return
+        }
+        registered << clazz.name
         log.info("Register as MessagePack ${clazz}")
         MessagePack.register(clazz)
     }
