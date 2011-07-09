@@ -33,7 +33,7 @@ class MessagePackBootStrap {
             EventLoop loop = EventLoop.defaultEventLoop()
             svr = new Server(loop)
             svr.serve(proxy)
-            svr.listen(1985)
+            svr.listen(grailsApplication.config.msgpack?.rpc?.port ?: 1985)
             log.info("MessagePack RPC server starts.")
         }
     }

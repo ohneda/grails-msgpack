@@ -24,3 +24,7 @@ log4j = {
 
     debug 'org.grails.msgpack'
 }
+
+msgpack{
+    rpc.port = 1985
+}
