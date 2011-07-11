@@ -11,16 +11,15 @@ import org.msgpack.annotation.Optional;
  *
  */
 @MessagePackBeans
-class User {
+class Role {
 
-    String name
-    String title
     @Optional
     Long id
     @Optional
     Long version
+    String name
+    String title
     @Ignore
-    Message message
-    @Optional
-    Role role
+    User user
+
 }

@@ -4,6 +4,7 @@ import org.msgpack.MessagePack
 
 import grails.plugin.spock.IntegrationSpec;
 import msgpack.Message
+import msgpack.Role
 import msgpack.User
 import msgpack.Comment
 
@@ -18,6 +19,11 @@ class GroovyBeansRegisterSpec extends IntegrationSpec{
         register.register(Message)
 
         def user = new User(name: "name", title: "title")
+        def role = new Role(name:'system', title:'manager')
+        role.save()
+        user.role = role
+        role.user =user
+
         def message = new Message(body: "body",
                 note: "notes",
                 dateCreated: new Date(),
@@ -55,6 +61,8 @@ class GroovyBeansRegisterSpec extends IntegrationSpec{
         unpack.owner.version == message.owner.version
         unpack.owner.title == message.owner.title
         unpack.owner.name == message.owner.name
+        unpack.owner.role.title == role.title
+        unpack.owner.role.name == role.name
         unpack.comments[0].id == message.comments[0].id
         unpack.comments[0].version == message.comments[0].version
         unpack.comments[0].title == message.comments[0].title

@@ -10,7 +10,9 @@ class MessagePackBootStrap {
 
     def init = { servletContext ->
 
-        startMsgpackRpcServer()
+        if(grailsApplication.config.msgpack?.rpc?.expose){
+          startMsgpackRpcServer()
+        }
     }
 
     def destroy = {
@@ -19,10 +21,8 @@ class MessagePackBootStrap {
     }
 
     def startMsgpackRpcServer(){
-
         def extractor = new ServiceClassExtractor(grailsApplication:grailsApplication)
         def targetService = extractor.extract()
-
         if(targetService){
             ServiceProxyFactory factory = new ServiceProxyFactory(target: targetService)
             factory.registerExcludeMethods(extractor.excludeMethodTemplateServiceClass())

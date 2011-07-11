@@ -28,6 +28,7 @@ class DomainModelFieldOptionReaderSpec extends IntegrationSpec {
         given:
         def field = mock(BeansFieldEntry)
         field.name.returns(fieldName).stub()
+        field.type.returns(classType).stub()
         FieldOption result
         play{
             result = reader.read( msgpack.Message, field, FieldOption.DEFAULT )
@@ -37,10 +38,10 @@ class DomainModelFieldOptionReaderSpec extends IntegrationSpec {
         result == option
 
         where:
-        fieldName     | option
-        'note'        | FieldOption.OPTIONAL
-        'dateUpdated' | FieldOption.OPTIONAL
-        'postalId'    | FieldOption.OPTIONAL
+        fieldName     | classType     | option
+        'note'        | String.class  | FieldOption.OPTIONAL
+        'dateUpdated' | Date.class    | FieldOption.OPTIONAL
+        'postalId'    | Integer.class | FieldOption.OPTIONAL
     }
 
     def 'the field which can be blank in constraints is treated as Default'(){
@@ -48,6 +49,7 @@ class DomainModelFieldOptionReaderSpec extends IntegrationSpec {
         given:
         def field = mock(BeansFieldEntry)
         field.name.returns('body').stub()
+        field.type.returns(String.class).stub()
 
         when:
         FieldOption result
@@ -64,6 +66,7 @@ class DomainModelFieldOptionReaderSpec extends IntegrationSpec {
         given:
         def field = mock(BeansFieldEntry)
         field.name.returns(fieldName).stub()
+        field.type.returns(classType).stub()
         FieldOption result
         play{
             result = reader.read( msgpack.Message, field, FieldOption.DEFAULT )
@@ -73,12 +76,12 @@ class DomainModelFieldOptionReaderSpec extends IntegrationSpec {
         result == option
 
         where:
-        fieldName     | option
-        'dateCreated' | FieldOption.DEFAULT
-        'owner'       | FieldOption.DEFAULT
-        'price'       | FieldOption.DEFAULT
-        'readCount'   | FieldOption.DEFAULT
-        'isPublic'    | FieldOption.DEFAULT
+        fieldName     | classType     | option
+        'dateCreated' | Date.class    | FieldOption.DEFAULT
+        'owner'       | User.class    | FieldOption.DEFAULT
+        'price'       | Float.class   | FieldOption.DEFAULT
+        'readCount'   | Integer.class | FieldOption.DEFAULT
+        'isPublic'    | Boolean.class | FieldOption.DEFAULT
     }
 
     def 'id field and version field, which is added by grails, is treated as Optional'(){
@@ -86,6 +89,7 @@ class DomainModelFieldOptionReaderSpec extends IntegrationSpec {
         given:
         def field = mock(BeansFieldEntry)
         field.name.returns(fieldName).stub()
+        field.type.returns(classType).stub()
         FieldOption result
         play{
             result = reader.read( msgpack.Message, field, FieldOption.DEFAULT )
@@ -95,9 +99,9 @@ class DomainModelFieldOptionReaderSpec extends IntegrationSpec {
         result == option
 
         where:
-        fieldName | option
-        'id'      | FieldOption.OPTIONAL
-        'version' | FieldOption.OPTIONAL
+        fieldName | classType  | option
+        'id'      | Long.class | FieldOption.OPTIONAL
+        'version' | Long.class | FieldOption.OPTIONAL
     }
 
     def 'the field which is marked as transient is treated as Ignore'(){
@@ -105,6 +109,7 @@ class DomainModelFieldOptionReaderSpec extends IntegrationSpec {
         given:
         def field = mock(BeansFieldEntry)
         field.name.returns(fieldName).stub()
+        field.type.returns(String.class).stub()
         FieldOption result
         play{
             result = reader.read( msgpack.Message, field, FieldOption.DEFAULT )
@@ -114,9 +119,9 @@ class DomainModelFieldOptionReaderSpec extends IntegrationSpec {
         result == option
 
         where:
-        fieldName | option
-        'transientProp' | FieldOption.IGNORE
-        'unusedField'   | FieldOption.IGNORE
+        fieldName       | classType    | option
+        'transientProp' | String.class | FieldOption.IGNORE
+        'unusedField'   | String.class | FieldOption.IGNORE
     }
 
     def 'the field which belongsTo parent class is treated as Ignore'(){
@@ -127,6 +132,7 @@ class DomainModelFieldOptionReaderSpec extends IntegrationSpec {
         given:
         def field = mock(BeansFieldEntry)
         field.name.returns(fieldName).stub()
+        field.type.returns(classType).stub()
         FieldOption result
         play{
             result = reader.read( msgpack.User, field, FieldOption.DEFAULT )
@@ -136,7 +142,7 @@ class DomainModelFieldOptionReaderSpec extends IntegrationSpec {
         result == option
 
         where:
-        fieldName | option
-        'message' | FieldOption.IGNORE
+        fieldName | classType     | option
+        'message' | msgpack.Message.class | FieldOption.IGNORE
     }
 }

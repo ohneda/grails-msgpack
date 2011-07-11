@@ -6,16 +6,17 @@ package msgpack
  * @author ohneda
  *
  */
-class User {
+class Role {
 
     String name
     String title
-    static hasOne = [role:Role]
 
-    static belongsTo = [message: Message]
+    def static belongsTo = [user: User]
+    static mapping = { 
+        user lazy: false
+    }
+
     static constraints = {
-        title nullable: true
-        name blank: false
-        role nullable: true
+        user nullable: false 
     }
 }

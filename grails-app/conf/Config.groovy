@@ -26,5 +26,6 @@ log4j = {
 }
 
 msgpack{
+    rpc.expose = true
     rpc.port = 1985
 }

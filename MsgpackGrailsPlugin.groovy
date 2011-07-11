@@ -12,9 +12,11 @@ class MsgpackGrailsPlugin {
             "grails-app/domain/msgpack/Comment.groovy",
             "grails-app/domain/msgpack/Message.groovy",
             "grails-app/domain/msgpack/User.groovy",
+            "grails-app/domain/msgpack/Role.groovy",
             "src/groovy/msgpack/beans/Comment.groovy",
             "src/groovy/msgpack/beans/Message.groovy",
             "src/groovy/msgpack/beans/User.groovy",
+            "src/groovy/msgpack/beans/Role.groovy",
             "grails-app/services/msgpack/MessageService.groovy",
             "grails-app/services/msgpack/NonMessagePackService.groovy",
     ]
