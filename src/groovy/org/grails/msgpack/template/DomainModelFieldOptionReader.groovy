@@ -1,10 +1,9 @@
 package org.grails.msgpack.template
 
-import java.lang.reflect.Field;
-
-import org.msgpack.template.BeansFieldEntry;
-import org.msgpack.template.FieldOption;
-import org.msgpack.template.FieldOptionReader;
+import org.grails.msgpack.util.GrailsDomainPropertyUtil
+import org.msgpack.template.BeansFieldEntry
+import org.msgpack.template.FieldOption
+import org.msgpack.template.FieldOptionReader
 import static org.codehaus.groovy.grails.commons.GrailsClassUtils.*
 import static org.codehaus.groovy.grails.commons.GrailsDomainConfigurationUtil.*
 
@@ -19,7 +18,7 @@ public class DomainModelFieldOptionReader implements FieldOptionReader {
                 return FieldOption.OPTIONAL
             }
 
-            if(isBelongsTo(targetClass, entry)){
+            if(GrailsDomainPropertyUtil.isBelongsTo(targetClass, entry.name)){
                 return FieldOption.IGNORE
             }
 
@@ -53,21 +52,5 @@ public class DomainModelFieldOptionReader implements FieldOptionReader {
         def hasOne = getStaticPropertyValue(entry.type, 'hasOne')
         hasOne?.entrySet()?.value?.contains(targetClass)
     }
-
-    /**
-     * check if the entry is my owner class.<br />
-     * for instance, if the class has 'User' class as 'user' property,<br />
-     * and the property is marked as 'belongsTo',<br />
-     * it means the class is owned by the User class.
-     * 
-     * @param targetClass
-     * @param entry
-     * @return
-     */
-    def isBelongsTo( Class<?> targetClass, BeansFieldEntry entry ){
-        def belongsTo = getStaticPropertyValue(targetClass, 'belongsTo')
-        belongsTo?.entrySet()?.value?.contains(entry.type)
-    }
-
 
 }

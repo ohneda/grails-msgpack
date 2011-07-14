@@ -13,6 +13,7 @@ class MsgpackGrailsPlugin {
             "grails-app/domain/msgpack/Message.groovy",
             "grails-app/domain/msgpack/User.groovy",
             "grails-app/domain/msgpack/Role.groovy",
+            "grails-app/domain/msgpack/PropertyTestDomain.groovy",
             "src/groovy/msgpack/beans/Comment.groovy",
             "src/groovy/msgpack/beans/Message.groovy",
             "src/groovy/msgpack/beans/User.groovy",
