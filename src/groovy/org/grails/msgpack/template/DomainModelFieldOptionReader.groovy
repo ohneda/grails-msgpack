@@ -1,11 +1,12 @@
 package org.grails.msgpack.template
 
+import static org.msgpack.template.FieldOption.*
+import static org.codehaus.groovy.grails.commons.GrailsClassUtils.*
+import static org.codehaus.groovy.grails.commons.GrailsDomainConfigurationUtil.*
+
 import org.grails.msgpack.util.GrailsDomainPropertyUtil
 import org.msgpack.template.BeansFieldEntry
 import org.msgpack.template.FieldOption
-import org.msgpack.template.FieldOptionReader
-import static org.codehaus.groovy.grails.commons.GrailsClassUtils.*
-import static org.codehaus.groovy.grails.commons.GrailsDomainConfigurationUtil.*
 
 @Singleton
 public class DomainModelFieldOptionReader implements FieldOptionReader {
@@ -15,25 +16,25 @@ public class DomainModelFieldOptionReader implements FieldOptionReader {
             FieldOption implicitOption ) {
 
             if(['id', 'version'].contains(entry.name)){
-                return FieldOption.OPTIONAL
+                return OPTIONAL
             }
 
             if(GrailsDomainPropertyUtil.isBelongsTo(targetClass, entry.name)){
-                return FieldOption.IGNORE
+                return IGNORE
             }
 
             if(isOwner(targetClass, entry)){
-                return FieldOption.IGNORE
+                return IGNORE
             }
 
             def constraints = evaluateConstraints(targetClass)
             if(constraints?."${entry.name}"?.nullable){
-                return FieldOption.OPTIONAL
+                return OPTIONAL
             }
 
             def transients = getStaticPropertyValue(targetClass, 'transients')
             if(transients?.contains(entry.name)){
-                return FieldOption.IGNORE
+                return IGNORE
             }
 
             return implicitOption

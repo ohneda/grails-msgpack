@@ -2,7 +2,6 @@ package org.grails.msgpack.util
 
 import org.apache.commons.logging.LogFactory;
 import org.codehaus.groovy.grails.commons.GrailsClassUtils
-import org.codehaus.groovy.grails.plugins.services.ServicesGrailsPlugin;
 
 /**
  * Extract the service class which is marked for exposing as MessagePack RPC

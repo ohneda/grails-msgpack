@@ -1,7 +1,5 @@
 package org.grails.msgpack.template;
 
-import org.grails.msgpack.template.DomainModelFieldOptionReader
-import org.grails.msgpack.template.GroovyBeansFieldEntryReader
 import org.msgpack.template.BeansFieldEntryReader
 import org.msgpack.template.IFieldEntryReader
 

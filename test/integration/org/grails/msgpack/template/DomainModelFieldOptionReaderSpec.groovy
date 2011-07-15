@@ -1,18 +1,12 @@
 package org.grails.msgpack.template
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import grails.plugin.spock.IntegrationSpec
 
-import grails.plugin.spock.IntegrationSpec;
+import msgpack.User
 
-import msgpack.Comment;
-import msgpack.User;
-
-import org.msgpack.template.BeansFieldEntry;
-import org.msgpack.template.FieldOption;
-import org.gmock.WithGMock;
-import spock.lang.Specification;
+import org.msgpack.template.BeansFieldEntry
+import org.msgpack.template.FieldOption
+import org.gmock.WithGMock
 
 @WithGMock
 class DomainModelFieldOptionReaderSpec extends IntegrationSpec {

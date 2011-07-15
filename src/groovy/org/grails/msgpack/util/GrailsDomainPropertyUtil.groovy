@@ -6,9 +6,6 @@ import static org.codehaus.groovy.grails.commons.GrailsDomainConfigurationUtil.*
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
 
-import org.codehaus.groovy.runtime.metaclass.ClosureMetaMethod
-import org.msgpack.template.BeansFieldEntry
-
 class GrailsDomainPropertyUtil {
 
     /**
@@ -35,7 +32,7 @@ class GrailsDomainPropertyUtil {
             return true
         }
 
-        return false
+        false
     }
 
     /**
@@ -51,7 +48,7 @@ class GrailsDomainPropertyUtil {
         if(genericType instanceof ParameterizedType){
             return genericType.actualTypeArguments
         }
-        return null
+        null
     }
 
     /**
@@ -65,7 +62,7 @@ class GrailsDomainPropertyUtil {
         if( values instanceof Map ){
              return values.keySet()
         }
-        return []
+        []
     }
 
     /**

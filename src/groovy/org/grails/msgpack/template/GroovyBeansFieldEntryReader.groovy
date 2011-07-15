@@ -1,12 +1,9 @@
-package org.grails.msgpack.template;
+package org.grails.msgpack.template
 
-import java.util.ArrayList
-
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.LogFactory
 import org.msgpack.template.BeansFieldEntry
 import org.msgpack.template.BeansFieldEntryReader
 import org.msgpack.template.FieldOption
-import org.msgpack.template.FieldOptionReader
 import org.msgpack.template.IFieldEntry
 
 public class GroovyBeansFieldEntryReader extends BeansFieldEntryReader {
@@ -17,24 +14,28 @@ public class GroovyBeansFieldEntryReader extends BeansFieldEntryReader {
 
     @Override
     public IFieldEntry[] readFieldEntries( Class<?> targetClass,
-            FieldOption implicitOption ) {
+    FieldOption implicitOption ) {
 
+        // TODO: refactor
         BeansFieldEntry[] entries = (BeansFieldEntry[]) super.readFieldEntries(
                 targetClass, implicitOption );
 
-        ArrayList<BeansFieldEntry> list = new ArrayList<BeansFieldEntry>();
+        ArrayList<BeansFieldEntry> list = []
         entries.each{
-            if ( it.getType() != groovy.lang.MetaClass.class ) {
-                FieldOption op = optionReader.read( targetClass, it,
-                        implicitOption );
-                it.option = op
-                log.debug("class ${targetClass} field ${it.name} set option ${op}")
-                list.add( it );
+            if ( it.type != groovy.lang.MetaClass ) {
+                list.add( evaluateFieldOption(targetClass, it, implicitOption))
             }
 
         }
 
         return list.toArray( new BeansFieldEntry[list.size()] );
+    }
+
+    def evaluateFieldOption(targetClass, field, implicitOption){
+        field.option = optionReader.read( targetClass, field,
+                implicitOption )
+        log.debug("class ${targetClass} field ${field.name} set option ${field.option}")
+        field
     }
 
 }

@@ -20,31 +20,15 @@ class GroovyBeansRegister {
     private static final log = LogFactory.getLog(this)
 
     private GroovyBeansRegister(){
+
         def registory = BuilderSelectorRegistry.getInstance()
 
         if(!registory.contains(GrailsDomainModelTemplateBuilderSelector.NAME)){
-            registory.insert(0, new GrailsDomainModelTemplateBuilderSelector(
-                    new JavassistTemplateBuilder(
-                        EntityFieldReaderFactory.getGrailsDomainModelFieldEntryReader(),
-                    new BuildContextFactory() {
-                        @Override
-                        public BuildContextBase createBuildContext(JavassistTemplateBuilder builder) {
-                            return new BeansBuildContext(builder);
-                        }
-                    }
-                    )));
+            registory.insert(0, newGrailsDomainModelTemplateBuilderSelector())
         }
+
         if(!registory.contains(GroovyBeansTemplateBuilderSelector.NAME)){
-            registory.insert(0, new GroovyBeansTemplateBuilderSelector(
-                    new JavassistTemplateBuilder(
-                        EntityFieldReaderFactory.getGroovyBeansFieldEntryReader(),
-                    new BuildContextFactory() {
-                        @Override
-                        public BuildContextBase createBuildContext(JavassistTemplateBuilder builder) {
-                            return new BeansBuildContext(builder);
-                        }
-                    }
-                    )));
+            registory.insert(0, newGroovyBeansTemplateBuilderSelector())
         }
     }
 
@@ -58,5 +42,33 @@ class GroovyBeansRegister {
         registered << clazz.name
         log.info("Register as MessagePack ${clazz}")
         MessagePack.register(clazz)
+    }
+
+    def newGrailsDomainModelTemplateBuilderSelector(){
+
+        new GrailsDomainModelTemplateBuilderSelector(
+                new JavassistTemplateBuilder(
+                EntityFieldReaderFactory.getGrailsDomainModelFieldEntryReader(),
+                new BuildContextFactory() {
+                    @Override
+                    public BuildContextBase createBuildContext(JavassistTemplateBuilder builder) {
+                        return new BeansBuildContext(builder);
+                    }
+                }
+                ))
+    }
+
+    def newGroovyBeansTemplateBuilderSelector(){
+
+        new GroovyBeansTemplateBuilderSelector(
+                new JavassistTemplateBuilder(
+                EntityFieldReaderFactory.getGroovyBeansFieldEntryReader(),
+                new BuildContextFactory() {
+                    @Override
+                    public BuildContextBase createBuildContext(JavassistTemplateBuilder builder) {
+                        return new BeansBuildContext(builder);
+                    }
+                }
+                ))
     }
 }

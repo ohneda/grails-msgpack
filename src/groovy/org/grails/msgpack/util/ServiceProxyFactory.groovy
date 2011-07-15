@@ -72,7 +72,7 @@ class ServiceProxyFactory {
             CtClass current = pool.get("${target.fullName}Proxy" )
             current.detach();
         }catch(NotFoundException e){
-
+            // do nothing
         }
 
         CtClass cc = pool.makeClass("${target.fullName}Proxy")

@@ -2,7 +2,6 @@ package org.grails.msgpack.util;
 
 import static org.junit.Assert.*;
 import grails.plugin.spock.IntegrationSpec;
-import spock.lang.Specification;
 import msgpack.*
 
 class GrailsDomainPropertyUtilSpec extends IntegrationSpec {
