@@ -1,4 +1,4 @@
-class GrailsMsgpackGrailsPlugin {
+class MsgpackGrailsPlugin {
     // the plugin version
     def version = "0.1"
     // the version or versions of Grails the plugin is designed for
@@ -7,7 +7,19 @@ class GrailsMsgpackGrailsPlugin {
     def dependsOn = [:]
     // resources that are excluded from plugin packaging
     def pluginExcludes = [
-            "grails-app/views/error.gsp"
+            "grails-app/views/error.gsp",
+            "grails-app/controllers/msgpack/MessageController.groovy",
+            "grails-app/domain/msgpack/Comment.groovy",
+            "grails-app/domain/msgpack/Message.groovy",
+            "grails-app/domain/msgpack/User.groovy",
+            "grails-app/domain/msgpack/Role.groovy",
+            "grails-app/domain/msgpack/PropertyTestDomain.groovy",
+            "src/groovy/msgpack/beans/Comment.groovy",
+            "src/groovy/msgpack/beans/Message.groovy",
+            "src/groovy/msgpack/beans/User.groovy",
+            "src/groovy/msgpack/beans/Role.groovy",
+            "grails-app/services/msgpack/MessageService.groovy",
+            "grails-app/services/msgpack/NonMessagePackService.groovy",
     ]
 
     // TODO Fill in these fields
@@ -19,7 +31,7 @@ This plugin enable a Grails services to be exposed as MessagePack via MessagePac
 '''
 
     // URL to the plugin's documentation
-    def documentation = "http://grails.org/plugin/grails-msgpack"
+    def documentation = "http://grails.org/plugin/msgpack"
 
     def doWithWebDescriptor = { xml ->
         // TODO Implement additions to web.xml (optional), this event occurs before 
