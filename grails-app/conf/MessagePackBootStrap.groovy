@@ -16,8 +16,10 @@ class MessagePackBootStrap {
     }
 
     def destroy = {
-        svr.close();
-        svr.getEventLoop().shutdown();
+        if(svr){
+          svr.close();
+          svr.getEventLoop().shutdown();
+        }
     }
 
     def startMsgpackRpcServer(){

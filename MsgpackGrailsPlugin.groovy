@@ -18,6 +18,8 @@ class MsgpackGrailsPlugin {
             "src/groovy/msgpack/beans/Message.groovy",
             "src/groovy/msgpack/beans/User.groovy",
             "src/groovy/msgpack/beans/Role.groovy",
+            "src/groovy/org/grails/msgpack/util/DataTransferObjectFactoryBean.groovy",
+            "src/groovy/org/grails/msgpack/util/ClassPathForGeneratedClasses.groovy",
             "grails-app/services/msgpack/MessageService.groovy",
             "grails-app/services/msgpack/NonMessagePackService.groovy",
     ]
