@@ -23,7 +23,10 @@ public class GroovyBeansFieldEntryReader extends BeansFieldEntryReader {
         ArrayList<BeansFieldEntry> list = []
         entries.each{
             if ( it.type != groovy.lang.MetaClass ) {
-                list.add( evaluateFieldOption(targetClass, it, implicitOption))
+                def field = evaluateFieldOption(targetClass, it, implicitOption)
+                if(field.option != org.msgpack.template.FieldOption.IGNORE){
+                    list.add( field )
+                }
             }
 
         }
