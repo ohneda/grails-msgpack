@@ -11,3 +11,7 @@ target
 /web-app/WEB-INF/tld
 .classpath
 .project
+CodeNarcReport.html
+*~
+plugin.xml
+tmp

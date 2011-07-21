@@ -1,6 +1,6 @@
 class MsgpackGrailsPlugin {
     // the plugin version
-    def version = "0.1"
+    def version = "0.1.1"
     // the version or versions of Grails the plugin is designed for
     def grailsVersion = "1.3.7 > *"
     // the other plugins this plugin depends on
@@ -18,6 +18,8 @@ class MsgpackGrailsPlugin {
             "src/groovy/msgpack/beans/Message.groovy",
             "src/groovy/msgpack/beans/User.groovy",
             "src/groovy/msgpack/beans/Role.groovy",
+            "src/groovy/org/grails/msgpack/util/DataTransferObjectFactoryBean.groovy",
+            "src/groovy/org/grails/msgpack/util/ClassPathForGeneratedClasses.groovy",
             "grails-app/services/msgpack/MessageService.groovy",
             "grails-app/services/msgpack/NonMessagePackService.groovy",
     ]
