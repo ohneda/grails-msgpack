@@ -61,15 +61,35 @@ For example, if the domain has 'nullable' constraint for the 'name' field, then 
 Configuration
 ----------------
 
-TODO
+You can set properties for this plugin in grails-app/config/Config.groovy like this:
+
+    msgpack{
+        rpc.expose = true
+        rpc.port = 1985
+    }
+
+Here is a list of the supported properties:
+
+  - rpc.expose - if true, the plugin will expose your service class. (default: false)
+  - rpc.port - The port on which the messagepack rpc will be available. (default: 1985)
 
 Demo
 ----------------
 
-You can see a demo application and sample client from the following repository.
+You can checkout a demo application and sample client from the following repository.
 
-<https://github.com/ohneda/grails-msgpack-demo>
-<https://github.com/ohneda/grails-msgpack-demo-client>
+demo: <https://github.com/ohneda/grails-msgpack-demo>
+
+democlient: <https://github.com/ohneda/grails-msgpack-demo-client>
+
+Known Issues
+---------------
+
+  - **Does not support a cyclic reference in domain classes** except the 'belongsTo' relationship. If you need a bidirectional relationship, you should use the 'belongsTo' property in domain.
+  - MessagePack RPC server doesn't restart in a development environment. You should stop your application first and start it again when you need some modifications during development.
+  - Just one service class is allowed to be exposed for now because MessagePack RPC doesn't support namespace. If you defined the expose property with 'msgpack' value in more than one service classes, it will be ignored.
+
+These issues will be fixed as soon as possible.
 
 Roadmap
 ----------------
@@ -78,11 +98,3 @@ Roadmap
   - Support msgpack-java-0.6
   - MessagePack RPC functional enhancement 
 
-Known Issues
----------------
-
-  - Does not support a cyclic reference in classes except the 'belongsTo' relationship. If you need a bidirectional relationship, you should use the 'belongsTo' property in domain.
-  - MessagePack RPC server doesn't restart in a development environment. You should stop your application first and start it again when you need some modifications during development.
-  - Just one service class is allowed to be exposed for now because MessagePack RPC doesn't support namespace. If you defined the expose property with 'msgpack' value in more than one service classes, it will be ignored.
-
-These issues will be fixed as soon as possible.
