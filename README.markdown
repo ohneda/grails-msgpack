@@ -88,6 +88,7 @@ Known Issues
   - **Does not support a cyclic reference in domain classes** except the 'belongsTo' relationship. If you need a bidirectional relationship, you should use the 'belongsTo' property in domain.
   - MessagePack RPC server doesn't restart in a development environment. You should stop your application first and start it again when you need some modifications during development.
   - Just one service class is allowed to be exposed for now because MessagePack RPC doesn't support namespace. If you defined the expose property with 'msgpack' value in more than one service classes, it will be ignored.
+  - Does not support 'errors' property in domain classes.If a domain class has 'errors' property, it will be ignored.
 
 These issues will be fixed as soon as possible.
 
